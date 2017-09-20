@@ -11,25 +11,19 @@ jobs:
     trigger: true  
   - get: onboarding-ci
     trigger: true
+  - get: onboarding-docker
+    trigger: true
   - task: onboard
+    image: onboarding-docker
     config:
       platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: ubuntu
-          tag: latest
       inputs:
       - name: some-git-resource
       run:
         path: sh
         args:
         - -c
-        - |
-          apt-get update
-          apt-get install tree
-          cd some-git-resource
-          tree .
+        - tree some-git-resource
 
 resources:
 - name: some-git-resource
@@ -42,3 +36,7 @@ resources:
   source:
     uri: https://github.com/michelleheh/onboarding-concourse
     branch: master
+- name: onboarding-docker
+  type: docker-image
+  source:
+    repository: protondonor/ubuntu-tree
