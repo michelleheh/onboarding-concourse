@@ -9,6 +9,8 @@ jobs:
   plan:
   - get: some-git-resource
     trigger: true  
+  - get: onboarding-ci
+    trigger: true
   - task: onboard
     config:
       platform: linux
@@ -34,4 +36,9 @@ resources:
   type: git
   source:
     uri: https://github.com/michelleheh/sandbox-redis-bosh-release
+    branch: master
+- name: onboarding-ci
+  type: git
+  source:
+    uri: https://github.com/michelleheh/onboarding-concourse
     branch: master
